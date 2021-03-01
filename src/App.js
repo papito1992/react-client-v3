@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, Suspense, lazy } from "react";
+import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import theme from "./theme";
+import GlobalStyles from "./GlobalStyles";
+import {AuthContext} from './context/auth-context';
+import {useAuth} from "./hooks/auth-hook";
+
+const LoggedInComponent = lazy(() => import("./components/authorized/Main"));
+const LoggedOutComponent = lazy(() => import("./components/unauthorized/Main"));
 
 function App() {
+  const {token, login, logout, id} = useAuth();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <BrowserRouter>
+      <AuthContext.Provider
+          value={{
+            isLoggedIn: !!token,
+            token: token,
+            id: id,
+            login: login,
+            logout: logout
+          }}
+      >
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          <GlobalStyles />
+          <Suspense fallback={<Fragment />}>
+            <Switch>
+              <Route path="/admin">
+                <LoggedInComponent />
+              </Route>
+              <Route>
+                <LoggedOutComponent />
+              </Route>
+            </Switch>
+          </Suspense>
+        </MuiThemeProvider>
+      </AuthContext.Provider>
+      </BrowserRouter>
   );
 }
 
