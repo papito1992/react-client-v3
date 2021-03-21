@@ -42,7 +42,6 @@ const Header = props => {
         </Grid>
         <Grid item>
           <Button
-            color="primary"
             variant="contained"
             component={RouterLink}
             to="/admin/create/customer"

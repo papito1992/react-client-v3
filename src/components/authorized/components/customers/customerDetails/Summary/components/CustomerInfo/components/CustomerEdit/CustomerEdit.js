@@ -54,11 +54,10 @@ const CustomerEdit = (props) => {
     const [formState, setFormState] = useState({
         ...customer
     });
-    const {isLoading, error, sendRequest, clearError} = useHttpClient();
+    const {sendRequest} = useHttpClient();
     const auth = useContext(AuthContext);
     const usernameRef = useRef();
     const emailRef = useRef();
-    const representativeIsbnRef = useRef();
     const hasRepresentationRef = useRef();
     const [value, setValue] = useState(currentRep);
     const [inputValue, setInputValue] = useState('');
@@ -68,10 +67,6 @@ const CustomerEdit = (props) => {
         // Here, we invoke the callback with the new value
         props.onChangeDetails[0](responseData);
         props.onChangeDetails[1](responseData);
-    }
-
-    if (!open) {
-        return null;
     }
 
     const handleFieldChange = event => {
@@ -89,7 +84,7 @@ const CustomerEdit = (props) => {
         event.preventDefault();
         try {
             const responseData = await sendRequest(
-                `http://localhost:8080/customers/${formState.customerId}`,
+                process.env.REACT_APP_BACKEND_URL+`customers/${formState.customerId}`,
                 'PUT',
                 JSON.stringify({
                     username: usernameRef.current.value,
@@ -107,13 +102,8 @@ const CustomerEdit = (props) => {
             enqueueSnackbar("Customer updated!")
         } catch (err) {
             enqueueSnackbar(err.toString())
-            console.log(err)
-            console.log(formState.customerId)
-            console.log(formState.username)
-            console.log(formState.representativeIsbn)
         }
     };
-
 
     return (
         <Modal
@@ -227,8 +217,7 @@ const CustomerEdit = (props) => {
                                     label="Address 1"
                                     name="address1"
                                     onChange={handleFieldChange}
-                                    // value={props.value}
-                                    // onChange={handleChange}
+
                                     variant="outlined"
                                 />
                             </Grid>

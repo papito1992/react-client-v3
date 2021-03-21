@@ -14,7 +14,7 @@ const Header = props => {
   const classes = useStyles();
 
   const customer = {
-    name: 'Ekaterina Tankova'
+    name: 'Temp Temp'
   };
 
   return (

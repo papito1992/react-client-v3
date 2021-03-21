@@ -13,13 +13,11 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  colors
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import ReceiptIcon from '@material-ui/icons/ReceiptOutlined';
 
-// import { Label } from 'components';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -78,13 +76,6 @@ const Invoices = props => {
               <TableCell>
                 {customer.iban}
                 <div>
-                  {/*<Label*/}
-                  {/*  color={*/}
-                  {/*    customer.autoCC ? colors.green[600] : colors.red[600]*/}
-                  {/*  }*/}
-                  {/*>*/}
-                  {/*  {customer.autoCC ? 'YES' : 'NO'}*/}
-                  {/*</Label>*/}
                 </div>
               </TableCell>
             </TableRow>

@@ -1,14 +1,13 @@
 import {createMuiTheme, responsiveFontSizes} from "@material-ui/core";
 
 // colors
-const primary = '#ffb74d';
-const secondary = '#d84315';
-const black = "#343a40";
-const darkBlack = "rgb(36, 40, 44)";
-const lightBlack = "rgb(52,54,57)";
+const secondary = "rgb(8,27,48)";
+const black = "#688fb7";
+const darkBlack = "rgb(10,31,59)";
+const lightBlack = "rgb(42,48,55)";
 const backgroundLightBlack = "rgb(8,27,48)";
-const background = "#f5f5f5";
 const warningLight = "rgba(253, 200, 69, .3)";
+const white = "rgb(254,255,255)";
 const warningMain = "rgba(253, 200, 69, .5)";
 const warningDark = "rgba(253, 200, 69, .7)";
 
@@ -24,7 +23,7 @@ const sm = 600;
 const xs = 0;
 
 // spacing
-const spacing = 8;
+const spacing = 4;
 
 const theme = createMuiTheme({
     palette: {
@@ -37,12 +36,11 @@ const theme = createMuiTheme({
             light: '#d4be73',
             main: '#ffb74d',
             dark: '#ffb300',
-            contrastText: '#000000',
         },
         text: {
-            primary: primary,
-            secondary: secondary,
-            link: background
+            primary: white,
+            secondary: white,
+            link: white
         },
         secondary: {main: secondary},
         common: {
@@ -58,7 +56,7 @@ const theme = createMuiTheme({
         // Used to shift a color's luminance by approximately
         // two indexes within its tonal palette.
         // E.g., shift from Red 500 to Red 300 or Red 700.
-        tonalOffset: 0.2,
+        tonalOffset: 0,
         spacing,
     },
     breakpoints: {
@@ -82,7 +80,7 @@ const theme = createMuiTheme({
     overrides: {
         MuiExpansionPanel: {
             root: {
-                position: "static"
+                position: "fluid"
             }
         },
         MuiTableCell: {

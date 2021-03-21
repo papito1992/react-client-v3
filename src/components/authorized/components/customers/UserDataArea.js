@@ -2,7 +2,7 @@ import React, {useCallback, useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {
     Avatar,
-    Box, Button,
+    Box,
     IconButton,
     makeStyles,
     Table,
@@ -10,6 +10,7 @@ import {
     TableCell,
     TablePagination,
     TableRow,
+    Tooltip,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EnhancedTableHead from "../../../shared/EnhancedTableHead";
@@ -21,7 +22,7 @@ import ConfirmationDialog from "../../../shared/ConfirmationDialog";
 import HighlightedInformation from "../../../shared/HighlightedInformation";
 import {useHttpClient} from "../../../../hooks/http-hook";
 import {AuthContext} from "../../../../context/auth-context";
-import {Details, Edit} from "@material-ui/icons";
+import {Edit} from "@material-ui/icons";
 import {Link as RouterLink} from "react-router-dom";
 // import stableSort from "../../../shared/functions/stableSort";
 // import getSorting from "../../../shared/functions/getSorting";
@@ -121,18 +122,15 @@ function CustomTable(props) {
     const deleteCustomer = async (props) => {
         try {
             const responseData = await sendRequest(
-                `http://localhost:8080/customers/${props.customerId}`, 'DELETE',
+                process.env.REACT_APP_BACKEND_URL+`customers/${props.customerId}`, 'DELETE',
                 null,
                 {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + auth.token
                 }
             );
-            console.log(requestStatus)
             enqueueSnackbar(responseData.message, {variant})
         } catch (err) {
-            // setReqError(err.toString())
-            console.log(err)
             enqueueSnackbar(err.toString(), {variant})
         }
     };
@@ -192,7 +190,6 @@ function CustomTable(props) {
 
     const handleDeleteTargetDialogOpen = useCallback(
         (row) => {
-        console.log(row)
             setIsDeleteTargetDialogOpen(true);
             setDeleteTargetDialogRow(row);
         },
@@ -263,23 +260,27 @@ function CustomTable(props) {
                                             </TableCell>
                                             <TableCell component="th" scope="row" className={classes.backAndTextCol}>
                                                 <Box display="flex" justifyContent="flex-end">
-                                                    <IconButton
-                                                        className={classes.iconButton}
-                                                        component={RouterLink}
-                                                        to={`/admin/customers/${row.customerId}`}
-                                                        aria-label="Details"
-                                                    >
-                                                        <Details className={classes.blackIcon}/>
-                                                    </IconButton>
-                                                    <IconButton
-                                                        className={classes.iconButton}
-                                                        onClick={() => {
-                                                            handleDeleteTargetDialogOpen(row);
-                                                        }}
-                                                        aria-label="Delete"
-                                                    >
-                                                        <DeleteIcon className={classes.blackIcon}/>
-                                                    </IconButton>
+                                                    <Tooltip title="Edit customer details!">
+                                                        <IconButton
+                                                            className={classes.iconButton}
+                                                            component={RouterLink}
+                                                            to={`/admin/customers/${row.customerId}`}
+                                                            aria-label="Details"
+                                                        >
+                                                            <Edit className={classes.blackIcon}/>
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                    <Tooltip title="Delete customer!">
+                                                        <IconButton
+                                                            className={classes.iconButton}
+                                                            onClick={() => {
+                                                                handleDeleteTargetDialogOpen(row);
+                                                            }}
+                                                            aria-label="Delete"
+                                                        >
+                                                            <DeleteIcon className={classes.blackIcon}/>
+                                                        </IconButton>
+                                                    </Tooltip>
                                                 </Box>
 
                                             </TableCell>

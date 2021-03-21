@@ -54,9 +54,7 @@ const RepresentativeEdit = (props) => {
     const [formState, setFormState] = useState({
         ...customer
     });
-    // console.log(representativeList)
-    // console.log(Object.values(representativeList.username));
-    const {isLoading, error, sendRequest, clearError} = useHttpClient();
+    const {sendRequest} = useHttpClient();
     const auth = useContext(AuthContext);
     const usernameRef = useRef();
     const emailRef = useRef();
@@ -90,7 +88,7 @@ const RepresentativeEdit = (props) => {
         event.preventDefault();
         try {
             const responseData = await sendRequest(
-                `http://localhost:8080/customers/${formState.customerId}`,
+                process.env.REACT_APP_BACKEND_URL+`customers/${formState.customerId}`,
                 'PUT',
                 JSON.stringify({
                     username: usernameRef.current.value,
@@ -182,8 +180,9 @@ const RepresentativeEdit = (props) => {
                                     }}
                                     id="controllable-states-demo"
                                     options={representativeList.map((d) => (d.isbn))}
-                                    renderInput={(params) => <TextField {...params} label="Current Representative"
-                                                                        variant="outlined"/>}
+                                    renderInput={(params) =>
+                                        <TextField {...params} label="Current Representative"
+                                                   variant="outlined"/>}
                                 />
                             </Grid>
                             <Grid
@@ -225,8 +224,6 @@ const RepresentativeEdit = (props) => {
                                     label="Address 1"
                                     name="address1"
                                     onChange={handleFieldChange}
-                                    // value={props.value}
-                                    // onChange={handleChange}
                                     variant="outlined"
                                 />
                             </Grid>

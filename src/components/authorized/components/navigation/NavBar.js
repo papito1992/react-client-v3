@@ -1,10 +1,9 @@
-import React, {Fragment, useCallback, useRef, useState} from "react";
+import React, {Fragment, useCallback, useContext, useRef, useState} from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import {
     AppBar,
-    Avatar,
     Box,
     Drawer,
     Hidden,
@@ -29,7 +28,7 @@ import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import SideDrawer from "./SideDrawer";
 import NavigationDrawer from "../../../shared/NavigationDrawer";
 import {AuthContext} from "../../../../context/auth-context";
-import {useAuth} from "../../../../hooks/auth-hook";
+import HomeIcon from "@material-ui/icons/Home";
 
 const styles = (theme) => ({
     appBar: {
@@ -127,8 +126,8 @@ const styles = (theme) => ({
 });
 
 function NavBar(props) {
-    const auth = useAuth(AuthContext);
-    const {selectedTab, messages, classes, width, openAddBalanceDialog} = props;
+    const auth = useContext(AuthContext);
+    const {selectedTab, classes, width,} = props;
     // Will be use to make website more accessible by screen readers
     const links = useRef([]);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -153,71 +152,95 @@ function NavBar(props) {
     const closeDrawer = useCallback(() => {
         setIsSideDrawerOpen(false);
     }, [setIsSideDrawerOpen]);
-
-    const menuItems = [
-        {
-            link: "/admin/customers",
-            name: "Customers",
-            onClick: closeMobileDrawer,
-            icon: {
-                desktop: (
-                    <DashboardIcon
-                        className={
-                            selectedTab === "Customers" ? classes.textPrimary : "text-white"
-                        }
-                        fontSize="small"
-                    />
-                ),
-                mobile: <DashboardIcon className="text-white"/>,
+    let menuItems;
+    if (auth.isLoggedIn) {
+        menuItems = [
+            {
+                link: "/",
+                name: "Home",
+                onClick: closeMobileDrawer,
+                icon: {
+                    desktop: (
+                        <HomeIcon className="text-white" fontSize="small"/>
+                    ),
+                    mobile: <HomeIcon className="text-white"/>,
+                },
             },
-        },
-        {
-            link: "/admin/create/customer",
-            name: "Add customer",
-            onClick: closeMobileDrawer,
-            icon: {
-                desktop: (
-                    <ImageIcon
-                        className={
-                            selectedTab === "Posts" ? classes.textPrimary : "text-white"
-                        }
-                        fontSize="small"
-                    />
-                ),
-                mobile: <ImageIcon className="text-white"/>,
+            {
+                link: "/admin/customers",
+                name: "Customers",
+                onClick: closeMobileDrawer,
+                icon: {
+                    desktop: (
+                        <DashboardIcon
+                            className={
+                                selectedTab === "Customers" ? classes.textPrimary : "text-white"
+                            }
+                            fontSize="small"
+                        />
+                    ),
+                    mobile: <DashboardIcon className="text-white"/>,
+                },
             },
-        },
-        {
-            link: "/admin/subscription",
-            name: "Representatives",
-            onClick: closeMobileDrawer,
-            icon: {
-                desktop: (
-                    <AccountBalanceIcon
-                        className={
-                            selectedTab === "Representatives"
-                                ? classes.textPrimary
-                                : "text-white"
-                        }
-                        fontSize="small"
-                    />
-                ),
-                mobile: <AccountBalanceIcon className="text-white"/>,
+            {
+                link: "/admin/create/customer",
+                name: "Add customer",
+                onClick: closeMobileDrawer,
+                icon: {
+                    desktop: (
+                        <ImageIcon
+                            className={
+                                selectedTab === "Posts" ? classes.textPrimary : "text-white"
+                            }
+                            fontSize="small"
+                        />
+                    ),
+                    mobile: <ImageIcon className="text-white"/>,
+                },
             },
-        },
-        {
+            {
+                link: "/admin/logs/customer",
+                name: "Customer logs",
+                onClick: closeMobileDrawer,
+                icon: {
+                    desktop: (
+                        <AccountBalanceIcon
+                            className={
+                                selectedTab === "Representatives"
+                                    ? classes.textPrimary
+                                    : "text-white"
+                            }
+                            fontSize="small"
+                        />
+                    ),
+                    mobile: <AccountBalanceIcon className="text-white"/>,
+                },
+            },
+            {
+                link: "/",
+                name: "Logout",
+                onClick: logout,
+                icon: {
+                    desktop: (
+                        <PowerSettingsNewIcon className="text-white" fontSize="small"/>
+                    ),
+                    mobile: <PowerSettingsNewIcon className="text-white"/>,
+                },
+            },
+        ];
+    } else {
+        menuItems = [{
             link: "/",
-            name: "Logout",
-            onClick: logout,
+            name: "Home",
+            onClick: closeMobileDrawer,
             icon: {
                 desktop: (
-                    <PowerSettingsNewIcon className="text-white" fontSize="small"/>
+                    <HomeIcon className="text-white" fontSize="small"/>
                 ),
-                mobile: <PowerSettingsNewIcon className="text-white"/>,
+                mobile: <HomeIcon className="text-white"/>,
             },
-        },
-    ];
-    console.log(auth)
+        },]
+    }
     return (
         <Fragment>
             <AppBar position="fixed" className={classes.appBar}>
@@ -241,7 +264,7 @@ function NavBar(props) {
                                 display="inline"
                                 color="primary"
                             >
-                                Alpaka
+                                {auth.isLoggedIn ? "Alpaka" : "Zalpaka"}
                             </Typography>
                         </Hidden>
                     </Box>
@@ -255,16 +278,11 @@ function NavBar(props) {
                             disableGutters
                             className={classNames(classes.iconListItem, classes.smBordered)}
                         >
-                            <Avatar
-                                alt="profile picture"
-                                src={`${process.env.PUBLIC_URL}/images/logged_in/profilePicture.jpg`}
-                                className={classNames(classes.accountAvatar)}
-                            />
                             {isWidthUp("sm", width) && (
                                 <ListItemText
                                     className={classes.username}
                                     primary={
-                                        <Typography color="primary">{auth.userId} "LOGGED IN"</Typography>
+                                        <Typography color="primary">{auth.userId} {auth.isLoggedIn ?"LOGGED IN" : "LOGGED OUT"}</Typography>
                                     }
                                 />
                             )}

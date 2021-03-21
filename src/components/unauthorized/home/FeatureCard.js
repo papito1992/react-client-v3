@@ -9,7 +9,7 @@ const styles = theme => ({
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: theme.spacing(3),
+    marginBottom: theme.spacing(0),
     padding: theme.spacing(1) * 1.5
   }
 });

@@ -8,28 +8,25 @@ import { Tabs, Tab, Divider, colors } from '@material-ui/core';
 import { Header, Summary, Invoices, Logs } from './index';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    padding: theme.spacing(3)
-  },
-  tabs: {
-    marginTop: theme.spacing(3)
-  },
-  divider: {
-    backgroundColor: colors.grey[300]
-  },
-  content: {
-    marginTop: theme.spacing(3)
-  }
+  // root: {
+  //   padding: theme.spacing(3)
+  // },
+  // tabs: {
+  //   marginTop: theme.spacing(3)
+  // },
+  // divider: {
+  //   backgroundColor: colors.grey[300]
+  // },
+  // content: {
+  //   marginTop: theme.spacing(3)
+  // }
 }));
 
 const CustomerManagementDetails = (props) => {
   const { match, history } = props;
   const classes = useStyles();
-  // const { customerId, tab } = match.params;
   const { customerId, tab } = match.params;
-  // console.log(props)
-  // console.log(customerId)
-  // console.log(tab)
+
   const handleTabsChange = (event, value) => {
     history.push(value);
   };
@@ -43,16 +40,8 @@ const CustomerManagementDetails = (props) => {
   if (!tab) {
     return <Redirect to={`/admin/customers/${customerId}/summary`} />;
   }
-  //
-  // if (!tabs.find(t => t.value === tab)) {
-  //   return <Redirect to="/errors/error-404" />;
-  // }
-
   return (
-    // <Page
-    //   className={classes.root}
-    //   title="Customer Management Details"
-    // >
+
       <React.Fragment>
       <Header />
       <Tabs
@@ -70,13 +59,12 @@ const CustomerManagementDetails = (props) => {
           />
         ))}
       </Tabs>
-      <Divider className={classes.divider} />
-      <div className={classes.content}>
+      <Divider/>
+      <div >
         {tab === 'summary' && <Summary props={props} customerId={customerId}/>}
         {tab === 'invoices' && <Invoices />}
         {tab === 'logs' && <Logs />}
       </div>
-    {/*// </Page>*/}
 </React.Fragment>
   );
 };

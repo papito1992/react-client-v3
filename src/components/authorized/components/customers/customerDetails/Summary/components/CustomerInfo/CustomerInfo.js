@@ -42,8 +42,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CustomerInfo = (props) => {
-    const {customer, className} = props;
-    const {isLoading, error, sendRequest, clearError} = useHttpClient();
+    const {customer} = props;
+    const {sendRequest, clearError} = useHttpClient();
     const [representativeList, setRepresentativeList] = useState([])
     const [currentRep, setCurrentRep] = useState('')
     const auth = useContext(AuthContext);
@@ -78,8 +78,6 @@ const CustomerInfo = (props) => {
             setRepresentativeList(responseData)
             setCurrentRep(customer.representativeIsbn)
         } catch (err) {
-            console.log(err)
-
         }
     };
     return (
@@ -150,11 +148,11 @@ const CustomerInfo = (props) => {
                         <EditIcon className={classes.buttonIcon}/>
                         Edit
                     </Button>
-                    <Button>
+                    <Button disabled>
                         <LockOpenIcon className={classes.buttonIcon}/>
                         Reset &amp; Send Password
                     </Button>
-                    <Button>
+                    <Button disabled>
                         <PersonIcon className={classes.buttonIcon}/>
                         Login as Customer
                     </Button>

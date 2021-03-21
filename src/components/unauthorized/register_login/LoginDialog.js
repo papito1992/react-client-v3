@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useRef, Fragment, useContext} from "react";
+import React, {useState,useRef, Fragment, useContext} from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { withRouter } from "react-router-dom";
@@ -12,10 +12,10 @@ import {
 } from "@material-ui/core";
 import FormDialog from "../../shared/FormDialog";
 import VisibilityPasswordTextField from "../../shared/VisibilityPasswordTextField";
-import {useForm} from "../../../hooks/form-hook";
 import {useHttpClient} from "../../../hooks/http-hook";
 import {AuthContext} from "../../../context/auth-context";
 import ButtonCircularProgress from "../../shared/ButtonCircularProgress";
+import HighlightedInformation from "../../shared/HighlightedInformation";
 
 const styles = (theme) => ({
   forgotPassword: {
@@ -52,47 +52,27 @@ function LoginDialog(props) {
   const loginEmail = useRef('megaUser@megaUser.com');
   const loginPassword = useRef('megaUser');
   const auth = useContext(AuthContext);
-  const {isLoadingTemp, error, sendRequest, clearError} = useHttpClient();
+  const {isLoadingTemp, sendRequest} = useHttpClient();
 
-  // const login = useCallback(() => {
-  //   setIsLoading(true);
-  //   setStatus(null);
-  //   if (loginEmail.current.value !== "test@web.com") {
-  //     setTimeout(() => {
-  //       setStatus("invalidEmail");
-  //       setIsLoading(false);
-  //     }, 1500);
-  //   } else if (loginPassword.current.value !== "HaRzwc") {
-  //     setTimeout(() => {
-  //       setStatus("invalidPassword");
-  //       setIsLoading(false);
-  //     }, 1500);
-  //   } else {
-  //     setTimeout(() => {
-  //       history.push("/c/dashboard");
-  //     }, 150);
-  //   }
-  // }, [setIsLoading, loginEmail, loginPassword, history, setStatus]);
   const authSubmitHandler = async event => {
     event.preventDefault();
     setIsLoading(true);
-    // setStatus(null);
     try {
       const responseData = await sendRequest(
-          'http://localhost:8080/api/auth/signin',
+          process.env.REACT_APP_BACKEND_URL+'api/auth/signin',
           'POST',
           JSON.stringify({
-            // username: loginEmail.current.value,
-            // password: loginPassword.current.value
-            username: "megaUser@megaUser.com",
-            password: "megaUser"
+            username: loginEmail.current.value,
+            password: loginPassword.current.value
           }),
           {
             'Content-Type': 'application/json'
           }
       );
-      console.log(responseData)
-      auth.login(responseData.id, responseData.token);
+
+      let userId=responseData.id
+      auth.login(userId, responseData.token);
+
       history.push("/admin/customers")
     } catch (err) {
     }
@@ -113,7 +93,6 @@ function LoginDialog(props) {
               variant="outlined"
               margin="normal"
               error={status === "invalidEmail"}
-              // required
               fullWidth
               label="Email Address"
               inputRef={loginEmail}
@@ -134,7 +113,6 @@ function LoginDialog(props) {
             <VisibilityPasswordTextField
               variant="outlined"
               margin="normal"
-              // required
               fullWidth
               error={status === "invalidPassword"}
               label="Password"
@@ -164,18 +142,11 @@ function LoginDialog(props) {
               control={<Checkbox color="primary" />}
               label={<Typography variant="body1">Remember me</Typography>}
             />
-            {/*{status === "verificationEmailSend" ? (*/}
-            {/*  <HighlightedInformation>*/}
-            {/*    We have send instructions on how to reset your password to your*/}
-            {/*    email address*/}
-            {/*  </HighlightedInformation>*/}
-            {/*) : (*/}
-            {/*  <HighlightedInformation>*/}
-            {/*    Email is: <b>test@web.com</b>*/}
-            {/*    <br />*/}
-            {/*    Password is: <b>HaRzwc</b>*/}
-            {/*  </HighlightedInformation>*/}
-            {/*)}*/}
+              <HighlightedInformation>
+                Email is: <b>megaUser@megaUser.com</b>
+                <br />
+                Password is: <b>megaUser</b>
+              </HighlightedInformation>
           </Fragment>
         }
         actions={

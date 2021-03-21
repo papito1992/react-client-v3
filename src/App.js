@@ -10,14 +10,14 @@ const LoggedInComponent = lazy(() => import("./components/authorized/Main"));
 const LoggedOutComponent = lazy(() => import("./components/unauthorized/Main"));
 
 function App() {
-  const {token, login, logout, id} = useAuth();
+  const {token, login, logout, userId} = useAuth();
   return (
       <BrowserRouter>
       <AuthContext.Provider
           value={{
             isLoggedIn: !!token,
             token: token,
-            id: id,
+            userId: userId,
             login: login,
             logout: logout
           }}

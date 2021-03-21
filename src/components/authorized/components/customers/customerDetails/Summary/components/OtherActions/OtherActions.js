@@ -8,7 +8,7 @@ import {
   CardContent,
   Button,
   Divider,
-  Typography
+  Typography, Tooltip
 } from '@material-ui/core';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import GetAppIcon from '@material-ui/icons/GetApp';
@@ -26,23 +26,16 @@ const useStyles = makeStyles(theme => ({
   },
   deleteButton: {
     marginTop: theme.spacing(1),
-    color: theme.palette.white,
-    backgroundColor: theme.palette.error.main,
-    '&:hover': {
-      backgroundColor: theme.palette.error.dark
-    }
   },
   buttonIcon: {
     marginRight: theme.spacing(1)
   }
 }));
 
-const OtherActions = props => {
-  const { className, ...rest } = props;
+const OtherActions = (props) => {
 
   const classes = useStyles();
 
-console.log({...rest})
   return (
     <Card
     >
@@ -50,26 +43,32 @@ console.log({...rest})
       <Divider />
       <CardContent>
         <div className={classes.mainActions}>
+          <Tooltip title="Only a preview!" enterDelay={200} leaveDelay={500}>
           <Button>
             <NotInterestedIcon className={classes.buttonIcon} />
             Close Customer Account
           </Button>
+          </Tooltip>
+          <Tooltip title="Only a preview!" enterDelay={200} leaveDelay={500}>
           <Button>
             <GetAppIcon className={classes.buttonIcon} />
             Export client data
           </Button>
+          </Tooltip>
         </div>
         <Typography
           className={classes.notice}
           variant="body2"
         >
-          Remove this this customer’s data if he requested that, if not please
+          Remove this customer’s data if he requested that, if not please
           be aware that what has been deleted can never brough back
         </Typography>
-        <Button className={classes.deleteButton}>
+        <Tooltip title="Only a preview!" enterDelay={200} leaveDelay={500}>
+        <Button className={classes.deleteButton} >
           <DeleteIcon className={classes.buttonIcon} />
           Delete Customer Account
         </Button>
+        </Tooltip>
       </CardContent>
     </Card>
   );

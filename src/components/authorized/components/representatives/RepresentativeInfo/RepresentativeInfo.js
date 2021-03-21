@@ -54,7 +54,6 @@ const RepresentativeInfo = (props) => {
 
     return (
         <Card
-
             className={clsx(classes.root, className)}
         >
             <CardHeader title="Representative Info"/>
@@ -79,12 +78,11 @@ const RepresentativeInfo = (props) => {
                     </Table> : ""}
             </CardContent>
             <CardActions>
-
-                <Button>
+                <Button disabled>
                     <EditIcon className={classes.buttonIcon}/>
                     Edit
                 </Button>
-                <Button>
+                <Button disabled>
                     <Block className={classes.buttonIcon}/>
                     Block
                 </Button>

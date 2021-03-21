@@ -5,42 +5,8 @@ import {Button, Card, CardHeader, Grid, Paper, TextField, withStyles} from "@mat
 import {makeStyles} from "@material-ui/styles";
 import classNames from "classnames";
 import {useSnackbar} from 'notistack';
-import {green} from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
-    margin: {
-        margin: "10px",
-        // marginBottom: `${theme.spacing(20)}px !important`
-    },
-    darkColor: {
-        color: theme.palette.darkBlack, // or theme.palette.primary.main
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: '35ch'
-    },
-    root: {
-        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.primary.light
-        },
-        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.primary.light
-        },
-        '& .MuiInputBase-root': {
-            color: "white"
-        },
-        '& .MuiInputLabel-root': {
-            color: theme.palette.primary.dark
-        }
-    },
-    backCol: {
-        backgroundColor: theme.palette.common.darkBlack
-    },
-    lightBackCol: {
-        backgroundColor: theme.palette.common.lightBlack
-    }
-
 }));
 
 const AddCustomer = (props) => {
@@ -50,16 +16,13 @@ const AddCustomer = (props) => {
     const usernameRef = useRef();
     const emailRef = useRef();
     const {enqueueSnackbar} = useSnackbar();
-    const [variant, setVariant] = useState("error");
+    const [variant, setVariant] = useState("success");
     const {history} = props;
-    // const hasRepresentation = useRef();
-    // const representativeIsbn = useRef();
 
     const customerSubmitHandler = async event => {
         event.preventDefault();
         try {
-            console.log(auth.token)
-            const responseData = await sendRequest('http://localhost:8080/customer',
+            const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL+'customer',
                 'POST',
                 JSON.stringify({
                     username: usernameRef.current.value,
@@ -75,7 +38,6 @@ const AddCustomer = (props) => {
             history.push('/admin/customers');
             enqueueSnackbar("Customer added!", {variant})
         } catch (err) {
-            console.log(err)
             enqueueSnackbar(err.toString(), {variant})
         }
     };
@@ -124,7 +86,6 @@ const AddCustomer = (props) => {
                         />
                         <Button
                             type="submit"
-                            color="primary"
                             className={classNames(classes.margin)}
                             variant="contained"
                             size="large"
