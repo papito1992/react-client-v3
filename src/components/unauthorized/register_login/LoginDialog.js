@@ -57,6 +57,7 @@ function LoginDialog(props) {
   const authSubmitHandler = async event => {
     event.preventDefault();
     setIsLoading(true);
+
     try {
       const responseData = await sendRequest(
           process.env.REACT_APP_BACKEND_URL+'api/auth/signin',
@@ -78,6 +79,7 @@ function LoginDialog(props) {
     }
     setIsLoading(isLoadingTemp);
   };
+
   return (
     <Fragment>
       <FormDialog

@@ -14,11 +14,10 @@ const styles = (theme) => ({
     }
 });
 
-function Main(props) {
+function Main() {
     const [selectedTab, setSelectedTab] = useState(null);
     const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
     const [dialogOpen, setDialogOpen] = useState(null);
-    const [isCookieRulesDialogOpen, setIsCookieRulesDialogOpen] = useState(false);
 
     const selectHome = useCallback(() => {
         document.title =
@@ -56,15 +55,6 @@ function Main(props) {
         setDialogOpen("changePassword");
     }, [setDialogOpen]);
 
-    //future
-    const handleCookieRulesDialogOpen = useCallback(() => {
-        setIsCookieRulesDialogOpen(true);
-    }, [setIsCookieRulesDialogOpen]);
-    //future
-    const handleCookieRulesDialogClose = useCallback(() => {
-        setIsCookieRulesDialogOpen(false);
-    }, [setIsCookieRulesDialogOpen]);
-
     return (
         <div>
             <DialogSelector
@@ -75,10 +65,6 @@ function Main(props) {
                 openRegisterDialog={openRegisterDialog}
                 openChangePasswordDialog={openChangePasswordDialog}
             />
-            {/*<CookieRulesDialog*/}
-            {/*  open={isCookieRulesDialogOpen}*/}
-            {/*  onClose={handleCookieRulesDialogClose}*/}
-            {/*/>*/}
             <NavBar
                 selectedTab={selectedTab}
                 selectTab={setSelectedTab}

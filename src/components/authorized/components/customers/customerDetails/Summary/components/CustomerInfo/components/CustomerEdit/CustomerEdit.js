@@ -10,7 +10,6 @@ import {
     colors,
     Grid,
     Modal,
-    Switch,
     TextField,
     Typography
 } from '@material-ui/core';
@@ -58,7 +57,6 @@ const CustomerEdit = (props) => {
     const auth = useContext(AuthContext);
     const usernameRef = useRef();
     const emailRef = useRef();
-    const hasRepresentationRef = useRef();
     const [value, setValue] = useState(currentRep);
     const [inputValue, setInputValue] = useState('');
 
@@ -84,7 +82,7 @@ const CustomerEdit = (props) => {
         event.preventDefault();
         try {
             const responseData = await sendRequest(
-                process.env.REACT_APP_BACKEND_URL+`customers/${formState.customerId}`,
+                process.env.REACT_APP_BACKEND_URL + `customers/${formState.customerId}`,
                 'PUT',
                 JSON.stringify({
                     username: usernameRef.current.value,
@@ -176,101 +174,6 @@ const CustomerEdit = (props) => {
                                     options={representativeList.map((d) => (d.isbn))}
                                     renderInput={(params) => <TextField {...params} label="Current Representative"
                                                                         variant="outlined"/>}
-                                />
-                            </Grid>
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    fullWidth
-                                    label="Representation Status"
-                                    name="hasRepresentation"
-                                    onChange={handleFieldChange}
-                                    value={formState.hasRepresentation.toString()}
-                                    variant="outlined"
-                                    inputRef={hasRepresentationRef}
-                                />
-                            </Grid>
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    fullWidth
-                                    label="Country"
-                                    name="country"
-                                    onChange={handleFieldChange}
-                                    value={"no country set"}
-                                    variant="outlined"
-                                />
-                            </Grid>
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    fullWidth
-                                    label="Address 1"
-                                    name="address1"
-                                    onChange={handleFieldChange}
-
-                                    variant="outlined"
-                                />
-                            </Grid>
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    fullWidth
-                                    label="Address 2"
-                                    name="address2"
-                                    onChange={handleFieldChange}
-                                    value={formState.address2}
-                                    variant="outlined"
-                                />
-                            </Grid>
-                            <Grid item/>
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <Typography variant="h5">Email Verified</Typography>
-                                <Typography variant="body2">
-                                    Disabling this will automatically send the user a verification
-                                    email
-                                </Typography>
-                                <Switch
-                                    checked={formState.verified}
-                                    color="secondary"
-                                    edge="start"
-                                    name="verified"
-                                    onChange={handleFieldChange}
-                                    value={formState.verified}
-                                />
-                            </Grid>
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <Typography variant="h5">Discounted Prices</Typography>
-                                <Typography variant="body2">
-                                    This will give the user discountedprices for all products
-                                </Typography>
-                                <Switch
-                                    checked={formState.discountedPrices}
-                                    color="secondary"
-                                    edge="start"
-                                    name="discountedPrices"
-                                    onChange={handleFieldChange}
-                                    value={formState.discountedPrices}
                                 />
                             </Grid>
                         </Grid>

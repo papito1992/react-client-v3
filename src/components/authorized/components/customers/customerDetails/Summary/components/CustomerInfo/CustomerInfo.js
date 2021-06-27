@@ -43,9 +43,9 @@ const useStyles = makeStyles(theme => ({
 
 const CustomerInfo = (props) => {
     const {customer} = props;
-    const {sendRequest, clearError} = useHttpClient();
+    const {sendRequest} = useHttpClient();
     const [representativeList, setRepresentativeList] = useState([])
-    const [currentRep, setCurrentRep] = useState('')
+    const [setCurrentRep] = useState('')
     const auth = useContext(AuthContext);
     const classes = useStyles();
 
@@ -56,8 +56,6 @@ const CustomerInfo = (props) => {
         if (representativeList.length === 0) {
             getRepresentativeListHandler()
         }
-
-
     };
 
     const handleEditClose = () => {
@@ -86,7 +84,6 @@ const CustomerInfo = (props) => {
             <CardHeader title="Customer info"/>
             <Divider/>
             <CardContent className={classes.content}>
-
                 <Table>
                     <TableBody>
                         <TableRow>
@@ -106,18 +103,11 @@ const CustomerInfo = (props) => {
                                 </div>
                             </TableCell>
                         </TableRow>
-                        <TableRow selected>
-                            <TableCell>Phone</TableCell>
-                            <TableCell>{customer.phone}</TableCell>
-                        </TableRow>
                         <TableRow>
                             <TableCell>Username</TableCell>
                             <TableCell>{customer.username}</TableCell>
                         </TableRow>
-                        <TableRow selected>
-                            <TableCell>Country</TableCell>
-                            <TableCell>{customer.country}</TableCell>
-                        </TableRow>
+
                         <TableRow>
                             <TableCell>Representative</TableCell>
                             <TableCell>

@@ -14,6 +14,7 @@ import FormDialog from "../../shared/FormDialog";
 import VisibilityPasswordTextField from "../../shared/VisibilityPasswordTextField";
 import {AuthContext} from "../../../context/auth-context";
 import {useHttpClient} from "../../../hooks/http-hook";
+import ButtonCircularProgress from "../../shared/ButtonCircularProgress";
 
 const styles = (theme) => ({
     link: {
@@ -53,6 +54,12 @@ function RegisterDialog(props) {
             registerPassword.current.value !== registerPasswordRepeat.current.value
         ) {
             setStatus("passwordsDontMatch");
+            return;
+        }
+        if (
+            registerPassword.current.value.length < 8
+        ) {
+            setStatus("passwordTooShort");
             return;
         }
         setStatus(null);
@@ -128,7 +135,7 @@ function RegisterDialog(props) {
                         }}
                         helperText={(() => {
                             if (status === "passwordTooShort") {
-                                return "Create a password at least 6 characters long.";
+                                return "Create a password at least 8 characters long.";
                             }
                             if (status === "passwordsDontMatch") {
                                 return "Your passwords dont match.";
@@ -160,7 +167,7 @@ function RegisterDialog(props) {
                         }}
                         helperText={(() => {
                             if (status === "passwordTooShort") {
-                                return "Create a password at least 6 characters long.";
+                                return "Create a password at least 8 characters long.";
                             }
                             if (status === "passwordsDontMatch") {
                                 return "Your passwords dont match.";
@@ -190,7 +197,6 @@ function RegisterDialog(props) {
                                     tabIndex={0}
                                     role="button"
                                     onKeyDown={(event) => {
-                                        // For screenreaders listen to space and enter events
                                         if (
                                             (!isLoading && event.keyCode === 13) ||
                                             event.keyCode === 32
@@ -217,16 +223,7 @@ function RegisterDialog(props) {
                             service.
                         </FormHelperText>
                     )}
-                    {/*{status === "accountCreated" ? (*/}
-                    {/*  <HighlightedInformation>*/}
-                    {/*    We have created your account. Please click on the link in the*/}
-                    {/*    email we have sent to you before logging in.*/}
-                    {/*  </HighlightedInformation>*/}
-                    {/*) : (*/}
-                    {/*  <HighlightedInformation>*/}
-                    {/*    Registration is disabled until we go live.*/}
-                    {/*  </HighlightedInformation>*/}
-                    {/*)}*/}
+
                 </Fragment>
             }
             actions={
@@ -239,7 +236,7 @@ function RegisterDialog(props) {
                     disabled={isLoading}
                 >
                     Register
-                    {/*{isLoading && <ButtonCircularProgress />}*/}
+                    {isLoading && <ButtonCircularProgress />}
                 </Button>
             }
         />

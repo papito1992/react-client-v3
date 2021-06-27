@@ -124,7 +124,7 @@ function HeadSection(props) {
                                                     fullWidth
                                                     className={classes.extraLargeButton}
                                                     classes={{label: classes.extraLargeButtonLabel}}
-                                                    href="https://github.com/dunky11/react-saas-template"
+                                                    onClick={() => window.open("https://github.com/papito1992/react-client-v3")}
                                                 >
                                                     Download from GitHub
                                                 </Button>

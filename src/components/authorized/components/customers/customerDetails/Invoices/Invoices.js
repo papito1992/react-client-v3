@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-// import PerfectScrollbar from 'react-perfect-scrollbar';
 import {makeStyles} from '@material-ui/styles';
 import {
   Button,
@@ -20,8 +19,6 @@ import {
 import PerfectScrollbar from "react-perfect-scrollbar";
 import Label from "../../../../../shared/Label";
 
-// import axios from 'utils/axios';
-// import { Label, GenericMoreButton } from 'components';
 
 const useStyles = makeStyles(() => ({
     root: {},
@@ -34,23 +31,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Invoices = props => {
-    const {className, ...rest} = props;
-
     const classes = useStyles();
     const [invoices, setInvoices] = useState([]);
 
     useEffect(() => {
-        let mounted = true;
-
         const fetchInvoices = () => {
             //future
         };
 
         fetchInvoices();
-
-        return () => {
-            mounted = false;
-        };
     }, []);
 
     const statusColors = {
@@ -64,7 +53,6 @@ const Invoices = props => {
         >
             <Card>
                 <CardHeader
-                    // action={<GenericMoreButton/>}
                     title="Customer invoices"
                 />
                 <Divider/>

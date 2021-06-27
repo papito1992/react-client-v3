@@ -7,8 +7,6 @@ function DialogSelector(props) {
     const {
         dialogOpen,
         openTermsDialog,
-        openRegisterDialog,
-        openLoginDialog,
         openChangePasswordDialog,
         onClose
     } = props;
@@ -32,9 +30,6 @@ function DialogSelector(props) {
                         setStatus={setRegisterStatus}
                     />
                 );
-                //future
-            // case "termsOfService":
-            //   return <TermsOfServiceDialog onClose={openRegisterDialog} />;
             case "login":
                 return (
                     <LoginDialog
@@ -44,22 +39,11 @@ function DialogSelector(props) {
                         openChangePasswordDialog={openChangePasswordDialog}
                     />
                 );
-                //future
-            // case "changePassword":
-            //   return (
-            //     <ChangePasswordDialog
-            //       setLoginStatus={setLoginStatus}
-            //       onClose={openLoginDialog}
-            //     />
-            //   );
             default:
-
         }
     }, [
         dialogOpen,
         openChangePasswordDialog,
-        openLoginDialog,
-        openRegisterDialog,
         openTermsDialog,
         _onClose,
         loginStatus,
@@ -70,7 +54,6 @@ function DialogSelector(props) {
 
     return (
         <Fragment>
-            {/*{dialogOpen && <ModalBackdrop open />}*/}
             {printDialog()}
         </Fragment>
     );

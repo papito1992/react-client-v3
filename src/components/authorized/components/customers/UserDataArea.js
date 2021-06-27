@@ -14,8 +14,6 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EnhancedTableHead from "../../../shared/EnhancedTableHead";
-import getSorting from "../../../shared/functions/getSorting";
-import stableSort from "../../../shared/functions/stableSort";
 import classNames from "classnames";
 import {useSnackbar} from 'notistack';
 import ConfirmationDialog from "../../../shared/ConfirmationDialog";
@@ -24,10 +22,6 @@ import {useHttpClient} from "../../../../hooks/http-hook";
 import {AuthContext} from "../../../../context/auth-context";
 import {Edit} from "@material-ui/icons";
 import {Link as RouterLink} from "react-router-dom";
-// import stableSort from "../../../shared/functions/stableSort";
-// import getSorting from "../../../shared/functions/getSorting";
-// import HighlightedInformation from "../../../shared/components/HighlightedInformation";
-// import ConfirmationDialog from "../../../shared/components/ConfirmationDialog";
 
 const styles = makeStyles((theme) => ({
     backCol: {
@@ -97,11 +91,9 @@ const rowsPerPage = 10;
 
 function CustomTable(props) {
     const classes = styles(props.theme);
-    const {loadedCustomers, setLoadedCustomers, theme} = props;
+    const {loadedCustomers, setLoadedCustomers} = props;
     const {enqueueSnackbar} = useSnackbar();
-    const [order, setOrder] = useState("asc");
     const [variant, setVariant] = useState("error");
-    const [orderBy, setOrderBy] = useState(null);
     const [page, setPage] = useState(0);
     const [reqError, setReqError] = useState();
     const [isDeleteTargetDialogOpen, setIsDeleteTargetDialogOpen] = useState(
@@ -109,20 +101,20 @@ function CustomTable(props) {
     );
     const [deleteTargetDialogRow, setDeleteTargetDialogRow] = useState(null);
     const [isDeleteTargetLoading, setIsDeleteTargetLoading] = useState(false);
-    const {isLoading, error, sendRequest, clearError, requestStatus} = useHttpClient();
+    const {sendRequest} = useHttpClient();
     const auth = useContext(AuthContext);
 
 
     useEffect(() => {
             setLoadedCustomers(props.loadedCustomers);
         },
-        [setLoadedCustomers]
+        [props.loadedCustomers, setLoadedCustomers]
     );
 
     const deleteCustomer = async (props) => {
         try {
             const responseData = await sendRequest(
-                process.env.REACT_APP_BACKEND_URL+`customers/${props.customerId}`, 'DELETE',
+                process.env.REACT_APP_BACKEND_URL + `customers/${props.customerId}`, 'DELETE',
                 null,
                 {
                     'Content-Type': 'application/json',
@@ -135,18 +127,7 @@ function CustomTable(props) {
         }
     };
 
-    const handleRequestSort = useCallback(
-        (__, property) => {
-            const _orderBy = property;
-            let _order = "desc";
-            if (orderBy === property && order === "desc") {
-                _order = "asc";
-            }
-            setOrder(_order);
-            setOrderBy(_orderBy);
-        },
-        [setOrder, setOrderBy, order, orderBy]
-    );
+
 
     const deleteTarget = useCallback(() => {
         setIsDeleteTargetLoading(true);
@@ -166,13 +147,9 @@ function CustomTable(props) {
             );
             _loadedCustomers.splice(index, 1);
             setLoadedCustomers(_loadedCustomers);
-
         }
 
     }, [
-        setIsDeleteTargetDialogOpen,
-        setIsDeleteTargetLoading,
-        setLoadedCustomers,
         deleteTargetDialogRow,
         loadedCustomers,
     ]);
@@ -219,14 +196,12 @@ function CustomTable(props) {
                     {loadedCustomers.length > 0 ? (
                         <Table aria-labelledby="tableTitle">
                             <EnhancedTableHead
-                                order={order}
-                                orderBy={orderBy}
-                                onRequestSort={handleRequestSort}
+
                                 rowCount={loadedCustomers.length}
                                 rows={rows}
                             />
                             <TableBody>
-                                {stableSort(loadedCustomers, getSorting(order, orderBy))
+                                {loadedCustomers
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row, index) => (
                                         <TableRow hover tabIndex={-1} key={index} className={classes.backAndTextCol}>

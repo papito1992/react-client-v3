@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {AppBar, Button, Hidden, IconButton, Toolbar, Typography, withStyles} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import HomeIcon from "@material-ui/icons/Home";
 import HowToRegIcon from "@material-ui/icons/HowToReg";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import NavigationDrawer from "../../shared/NavigationDrawer";
@@ -44,11 +43,6 @@ function NavBar(props) {
     } = props;
     let menuItems;
     menuItems = [
-        {
-            link: "/",
-            name: "Home",
-            icon: <HomeIcon className="text-white"/>
-        },
         {
             name: "Register",
             onClick: openRegisterDialog,

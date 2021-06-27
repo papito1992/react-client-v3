@@ -96,7 +96,7 @@ const socialIcons = [
             </svg>
         ),
         label: "Github",
-        href: "https://github.com/dunky11/react-saas-template"
+        href: "https://github.com/papito1992"
     },
     {
         icon: (
@@ -119,7 +119,7 @@ const socialIcons = [
 ];
 
 function Footer(props) {
-    const {classes, theme, width} = props;
+    const {classes, width} = props;
     return (
         <footer>
             <div className={classes.footerInner}>
@@ -168,7 +168,7 @@ function Footer(props) {
                                     <IconButton
                                         aria-label={socialIcon.label}
                                         className={classes.socialIcon}
-                                        href={socialIcon.href}
+                                        onClick={() => window.open(socialIcon.href)}
                                     >
                                         {socialIcon.icon}
                                     </IconButton>

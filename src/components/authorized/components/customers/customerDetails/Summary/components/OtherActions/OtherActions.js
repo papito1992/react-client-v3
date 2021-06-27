@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -32,25 +31,25 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const OtherActions = (props) => {
+const OtherActions = () => {
 
   const classes = useStyles();
 
   return (
     <Card
     >
-      <CardHeader title="Other actions" />
+      <CardHeader title="Other actions!" />
       <Divider />
       <CardContent>
         <div className={classes.mainActions}>
           <Tooltip title="Only a preview!" enterDelay={200} leaveDelay={500}>
-          <Button>
+          <Button disabled>
             <NotInterestedIcon className={classes.buttonIcon} />
             Close Customer Account
           </Button>
           </Tooltip>
           <Tooltip title="Only a preview!" enterDelay={200} leaveDelay={500}>
-          <Button>
+          <Button disabled>
             <GetAppIcon className={classes.buttonIcon} />
             Export client data
           </Button>
@@ -64,7 +63,7 @@ const OtherActions = (props) => {
           be aware that what has been deleted can never brough back
         </Typography>
         <Tooltip title="Only a preview!" enterDelay={200} leaveDelay={500}>
-        <Button className={classes.deleteButton} >
+        <Button className={classes.deleteButton} disabled>
           <DeleteIcon className={classes.buttonIcon} />
           Delete Customer Account
         </Button>

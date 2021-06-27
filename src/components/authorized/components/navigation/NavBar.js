@@ -128,7 +128,6 @@ const styles = (theme) => ({
 function NavBar(props) {
     const auth = useContext(AuthContext);
     const {selectedTab, classes, width,} = props;
-    // Will be use to make website more accessible by screen readers
     const links = useRef([]);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false);
@@ -143,7 +142,7 @@ function NavBar(props) {
 
     const logout = useCallback(() => {
         auth.logout();
-    }, []);
+    }, [auth]);
 
     const openDrawer = useCallback(() => {
         setIsSideDrawerOpen(true);

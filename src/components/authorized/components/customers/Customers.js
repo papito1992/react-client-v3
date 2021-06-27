@@ -7,7 +7,8 @@ import Header from "./header/Header";
 function Customers(props) {
     const [loadedCustomers, setLoadedCustomers] = useState([])
     const auth = useContext(AuthContext);
-    const {isLoading, error, sendRequest, clearError} = useHttpClient();
+    const {sendRequest} = useHttpClient();
+
     const fetchCustomers = async () => {
         try {
             const responseData = await sendRequest(
@@ -23,10 +24,8 @@ function Customers(props) {
         }
     };
     useEffect(() => {
-            const resp = fetchCustomers()
-        },
-        [setLoadedCustomers]
-    );
+    fetchCustomers();
+    },[])
     return (
         <Fragment>
             <Header/>

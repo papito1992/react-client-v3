@@ -58,14 +58,12 @@ const RepresentativeEdit = (props) => {
     const auth = useContext(AuthContext);
     const usernameRef = useRef();
     const emailRef = useRef();
-    const representativeIsbnRef = useRef();
     const hasRepresentationRef = useRef();
     const [value, setValue] = useState(currentRep);
     const [inputValue, setInputValue] = useState('');
 
 
     function handleChange(responseData) {
-        // Here, we invoke the callback with the new value
         props.onChange(responseData);
     }
 

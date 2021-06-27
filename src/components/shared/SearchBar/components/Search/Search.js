@@ -52,7 +52,7 @@ const Search = props => {
                 <Input
                     className={classes.searchInput}
                     disableUnderline
-                    placeholder="Search"
+                    placeholder="Search by ID"
                     inputRef={loginPassword}
                     value={input} onInput={e => {
                     setInput(e.target.value)

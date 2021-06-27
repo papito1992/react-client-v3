@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
 
 const Summary = (props) => {
     const {className, ...rest} = props;
-    const {isLoading, error, sendRequest, clearError} = useHttpClient();
+    const { sendRequest} = useHttpClient();
     const auth = useContext(AuthContext);
     const classes = useStyles();
     const [customer, setCustomer] = useState();
@@ -24,14 +24,10 @@ const Summary = (props) => {
     const [value, setValue] = useState();
     const [rep, setRep] = useState();
     useEffect(() => {
-        let mounted = true;
         if (customer === undefined) {
             fetchCustomer();
         }
-        return () => {
-            mounted = false;
-        };
-    }, [setRep]);
+    }, [customer]);
     const fetchCustomer = async () => {
         try {
             await sendRequest(
